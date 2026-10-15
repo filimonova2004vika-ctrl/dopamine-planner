@@ -28,39 +28,7 @@
       box-sizing: border-box;
       -webkit-tap-highlight-color: transparent;
     }
-.calendar-day {
-  border: 0;
-  cursor: pointer;
-}
 
-.calendar-day:hover {
-  background: var(--surface-light);
-}
-
-.calendar-day.today {
-  background: var(--coral);
-}
-
-.calendar-day.selected-date {
-  outline: 2px solid #ffffff;
-  outline-offset: 2px;
-}
-
-.calendar-nav-button {
-  width: 32px;
-  height: 32px;
-  color: var(--text);
-  background: var(--surface-light);
-  border-radius: 10px;
-  font-size: 22px;
-}
-
-.planner-date-label {
-  margin-top: 5px;
-  color: var(--muted);
-  font-size: 14px;
-}
-    
     body {
       margin: 0;
       min-height: 100vh;
@@ -87,7 +55,7 @@
       max-width: 540px;
       min-height: 100vh;
       margin: 0 auto;
-      padding-bottom: 92px;
+      padding-bottom: 95px;
     }
 
     .page {
@@ -112,13 +80,6 @@
       }
     }
 
-    .topbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 22px;
-    }
-
     h1,
     h2,
     h3,
@@ -133,7 +94,7 @@
     }
 
     h2 {
-      font-size: 23px;
+      font-size: 22px;
       letter-spacing: -0.5px;
     }
 
@@ -141,8 +102,22 @@
       font-size: 16px;
     }
 
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+
     .muted {
       color: var(--muted);
+    }
+
+    .planner-date-label {
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 14px;
     }
 
     .section-title {
@@ -153,18 +128,20 @@
     }
 
     .card {
-      background: rgba(20, 26, 49, 0.94);
+      background: rgba(20, 26, 49, 0.96);
       border: 1px solid var(--border);
       border-radius: 25px;
       box-shadow: var(--shadow);
     }
 
     .icon-button {
+      display: grid;
+      place-items: center;
       width: 42px;
       height: 42px;
-      border-radius: 14px;
-      background: var(--surface-light);
       color: var(--text);
+      background: var(--surface-light);
+      border-radius: 14px;
       font-size: 22px;
     }
 
@@ -215,10 +192,21 @@
 
     .calendar-header {
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
       margin-bottom: 16px;
       font-weight: 800;
+    }
+
+    .calendar-nav-button {
+      display: grid;
+      place-items: center;
+      width: 32px;
+      height: 32px;
+      color: var(--text);
+      background: var(--surface-light);
+      border-radius: 10px;
+      font-size: 22px;
     }
 
     .calendar-grid,
@@ -230,9 +218,9 @@
     }
 
     .weekday {
-      font-size: 11px;
-      color: var(--muted);
       padding-bottom: 5px;
+      color: var(--muted);
+      font-size: 11px;
     }
 
     .calendar-day {
@@ -241,9 +229,15 @@
       width: 32px;
       height: 32px;
       margin: 0 auto;
-      border-radius: 50%;
+      padding: 0;
       color: var(--text);
+      background: transparent;
+      border-radius: 50%;
       font-size: 13px;
+    }
+
+    .calendar-day:hover {
+      background: var(--surface-light);
     }
 
     .calendar-day.today {
@@ -251,30 +245,37 @@
       font-weight: 800;
     }
 
+    .calendar-day.selected-date {
+      outline: 2px solid #ffffff;
+      outline-offset: 2px;
+    }
+
     .calendar-day.empty {
       opacity: 0;
+      pointer-events: none;
     }
 
     .event-card {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 11px;
       padding: 15px;
       margin-bottom: 10px;
-      border-radius: 17px;
       color: white;
+      border-radius: 17px;
       font-weight: 750;
     }
 
-    .event-card .event-time {
-      width: 45px;
-      font-size: 13px;
-      opacity: 0.9;
+    .event-time {
+      width: 82px;
+      font-size: 12px;
+      opacity: 0.94;
     }
 
-    .event-card .event-icon {
+    .event-icon {
       display: grid;
       place-items: center;
+      flex: 0 0 30px;
       width: 30px;
       height: 30px;
       background: rgba(255, 255, 255, 0.2);
@@ -316,8 +317,8 @@
     .habit {
       min-width: 145px;
       padding: 13px;
-      text-align: left;
       color: white;
+      text-align: left;
       border-radius: 18px;
     }
 
@@ -367,7 +368,7 @@
 
     .planner-event {
       display: grid;
-      grid-template-columns: 48px 1fr;
+      grid-template-columns: 76px 1fr;
       gap: 10px;
       align-items: center;
       margin-bottom: 10px;
@@ -375,7 +376,7 @@
 
     .planner-time {
       color: var(--muted);
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 700;
     }
 
@@ -414,8 +415,8 @@
     .module-card {
       min-height: 168px;
       padding: 15px;
-      text-align: left;
       color: var(--text);
+      text-align: left;
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 23px;
@@ -470,71 +471,6 @@
       color: #ffb0d9;
     }
 
-    .nav {
-      position: fixed;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      z-index: 10;
-      display: flex;
-      justify-content: center;
-      padding: 10px 12px 17px;
-      background: rgba(9, 13, 31, 0.93);
-      border-top: 1px solid var(--border);
-      backdrop-filter: blur(18px);
-    }
-
-    .nav-inner {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      width: min(540px, 100%);
-    }
-
-    .nav-button {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 5px;
-      padding: 5px 0;
-      color: var(--muted);
-      background: transparent;
-      font-size: 11px;
-    }
-
-    .nav-button span {
-      display: grid;
-      place-items: center;
-      width: 32px;
-      height: 28px;
-      font-size: 18px;
-      border-radius: 10px;
-    }
-
-    .nav-button.active {
-      color: #82a4ff;
-      font-weight: 800;
-    }
-
-    .nav-button.active span {
-      background: rgba(40, 100, 255, 0.2);
-    }
-
-    .fab {
-      position: fixed;
-      right: max(22px, calc((100vw - 540px) / 2 + 22px));
-      bottom: 87px;
-      z-index: 11;
-      display: grid;
-      place-items: center;
-      width: 59px;
-      height: 59px;
-      color: white;
-      background: var(--blue);
-      border-radius: 50%;
-      box-shadow: 0 12px 25px rgba(40, 100, 255, 0.45);
-      font-size: 30px;
-    }
-
     .list-card {
       overflow: hidden;
     }
@@ -552,28 +488,26 @@
       border-bottom: 0;
     }
 
-    .list-row .row-icon {
+    .row-icon {
       display: grid;
       place-items: center;
       flex: 0 0 38px;
       width: 38px;
       height: 38px;
       border-radius: 12px;
-      background: var(--surface-light);
-      color: #9cb6ff;
       font-weight: 900;
     }
 
-    .list-row .row-content {
+    .row-content {
       flex: 1;
     }
 
-    .list-row strong,
-    .list-row small {
+    .row-content strong,
+    .row-content small {
       display: block;
     }
 
-    .list-row small {
+    .row-content small {
       margin-top: 4px;
       color: var(--muted);
     }
@@ -669,12 +603,81 @@
       border-radius: inherit;
     }
 
+    .profile-card {
+      padding: 18px;
+    }
+
+    .profile-label {
+      display: block;
+      margin: 4px 0 7px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .profile-card input {
+      margin-bottom: 17px;
+    }
+
+    .profile-save-button {
+      width: 100%;
+      height: 50px;
+      margin-top: 4px;
+    }
+
+    .profile-save-message {
+      min-height: 18px;
+      margin-top: 12px;
+      color: var(--mint);
+      text-align: center;
+      font-size: 13px;
+    }
+
+    .profile-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .profile-row:last-child {
+      border-bottom: 0;
+    }
+
+    .switch {
+      position: relative;
+      width: 48px;
+      height: 28px;
+      padding: 0;
+      background: #39425f;
+      border-radius: 30px;
+    }
+
+    .switch::after {
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      width: 20px;
+      height: 20px;
+      content: "";
+      background: white;
+      border-radius: 50%;
+      transition: 0.2s ease;
+    }
+
+    .switch.on {
+      background: var(--blue);
+    }
+
+    .switch.on::after {
+      transform: translateX(20px);
+    }
+
     .modal {
       position: fixed;
       inset: 0;
       z-index: 30;
       display: none;
-      align-items: end;
+      align-items: flex-end;
       background: rgba(0, 0, 0, 0.58);
     }
 
@@ -685,7 +688,7 @@
     .modal-sheet {
       width: 100%;
       max-width: 540px;
-      min-height: 280px;
+      min-height: 340px;
       margin: 0 auto;
       padding: 18px;
       background: #171e38;
@@ -733,48 +736,69 @@
       margin-top: 22px;
     }
 
-    .profile-card {
-      padding: 18px;
-    }
-
-    .profile-row {
+    .nav {
+      position: fixed;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 10;
       display: flex;
-      justify-content: space-between;
-      padding: 14px 0;
-      border-bottom: 1px solid var(--border);
+      justify-content: center;
+      padding: 10px 12px 17px;
+      background: rgba(9, 13, 31, 0.93);
+      border-top: 1px solid var(--border);
+      backdrop-filter: blur(18px);
     }
 
-    .profile-row:last-child {
-      border-bottom: 0;
+    .nav-inner {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      width: min(540px, 100%);
     }
 
-    .switch {
-      position: relative;
-      width: 48px;
+    .nav-button {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 0;
+      color: var(--muted);
+      background: transparent;
+      font-size: 11px;
+    }
+
+    .nav-button span {
+      display: grid;
+      place-items: center;
+      width: 32px;
       height: 28px;
-      padding: 0;
-      background: #39425f;
-      border-radius: 30px;
+      font-size: 18px;
+      border-radius: 10px;
     }
 
-    .switch::after {
-      position: absolute;
-      top: 4px;
-      left: 4px;
-      width: 20px;
-      height: 20px;
-      content: "";
-      background: white;
-      border-radius: 50%;
-      transition: 0.2s ease;
+    .nav-button.active {
+      color: #82a4ff;
+      font-weight: 800;
     }
 
-    .switch.on {
+    .nav-button.active span {
+      background: rgba(40, 100, 255, 0.2);
+    }
+
+    .fab {
+      position: fixed;
+      right: max(22px, calc((100vw - 540px) / 2 + 22px));
+      bottom: 87px;
+      z-index: 11;
+      display: grid;
+      place-items: center;
+      width: 59px;
+      height: 59px;
+      color: white;
       background: var(--blue);
-    }
-
-    .switch.on::after {
-      transform: translateX(20px);
+      border-radius: 50%;
+      box-shadow: 0 12px 25px rgba(40, 100, 255, 0.45);
+      font-size: 30px;
     }
   </style>
 </head>
@@ -785,8 +809,9 @@
       <div class="topbar">
         <div>
           <p class="muted">Доброе утро,</p>
-          <h1>Алекс</h1>
+          <h1 id="homeName">Алекс</h1>
         </div>
+
         <button class="icon-button" onclick="showPage('profile')">⌘</button>
       </div>
 
@@ -813,17 +838,17 @@
         </div>
       </div>
 
-     <div class="card calendar-card">
-  <div class="calendar-header">
-    <button class="calendar-nav-button" onclick="changeMonth(-1)">‹</button>
-    <span id="calendarTitle">Календарь</span>
-    <button class="calendar-nav-button" onclick="changeMonth(1)">›</button>
-  </div>
+      <div class="card calendar-card">
+        <div class="calendar-header">
+          <button class="calendar-nav-button" onclick="changeMonth(-1)">‹</button>
+          <span id="calendarTitle">Календарь</span>
+          <button class="calendar-nav-button" onclick="changeMonth(1)">›</button>
+        </div>
 
-  <div id="monthCalendar" class="calendar-grid"></div>
-</div>
+        <div id="monthCalendar" class="calendar-grid"></div>
+      </div>
 
-      <h2 class="section-title">Расписание на сегодня</h2>
+      <h2 id="homeScheduleTitle" class="section-title">Расписание</h2>
       <div id="homeEvents"></div>
 
       <h2 class="section-title">Серии привычек</h2>
@@ -831,14 +856,15 @@
     </section>
 
     <section id="planner" class="page">
-     <div class="topbar">
-  <div>
-    <p id="plannerMonthLabel" class="muted">Календарь</p>
-    <h1>Планер</h1>
-    <p id="plannerDateTitle" class="planner-date-label">Выберите дату</p>
-  </div>
-  <button class="icon-button" onclick="openTaskModal()">+</button>
-</div>
+      <div class="topbar">
+        <div>
+          <p id="plannerMonthLabel" class="muted">Календарь</p>
+          <h1>Планер</h1>
+          <p id="plannerDateTitle" class="planner-date-label">Выберите дату</p>
+        </div>
+
+        <button class="icon-button" onclick="openTaskModal()">+</button>
+      </div>
 
       <div id="weekGrid" class="week-grid"></div>
 
@@ -846,20 +872,21 @@
       <div id="plannerEvents"></div>
 
       <h2 class="section-title">Быстрые задачи</h2>
+
       <div class="quick-tasks">
-        <button class="quick-task" style="background: var(--blue)">
+        <button class="quick-task" style="background: var(--blue)" onclick="openTaskModal()">
           <p>Отправить отчёт</p>
-          <span>✓</span>
+          <span>+</span>
         </button>
 
-        <button class="quick-task" style="background: var(--coral)">
+        <button class="quick-task" style="background: var(--coral)" onclick="openTaskModal()">
           <p>Купить продукты</p>
           <span>+</span>
         </button>
 
-        <button class="quick-task" style="background: var(--mint)">
+        <button class="quick-task" style="background: var(--mint)" onclick="openTaskModal()">
           <p>Позвонить врачу</p>
-          <span>◌</span>
+          <span>+</span>
         </button>
       </div>
     </section>
@@ -922,15 +949,27 @@
       </div>
 
       <div class="card profile-card">
-        <div class="profile-row">
-          <span>Имя</span>
-          <span class="muted">Алекс</span>
-        </div>
+        <label for="profileName" class="profile-label">Имя</label>
+        <input
+          id="profileName"
+          type="text"
+          maxlength="30"
+          placeholder="Ваше имя"
+        >
 
-        <div class="profile-row">
-          <span>Главная цель</span>
-          <span class="muted">Меньше хаоса</span>
-        </div>
+        <label for="profileGoal" class="profile-label">Главная цель</label>
+        <input
+          id="profileGoal"
+          type="text"
+          maxlength="100"
+          placeholder="Например, меньше хаоса"
+        >
+
+        <button class="primary-button profile-save-button" onclick="saveProfile()">
+          Сохранить изменения
+        </button>
+
+        <p id="profileSaveMessage" class="profile-save-message"></p>
       </div>
 
       <h2 class="section-title">Настройки</h2>
@@ -938,17 +977,29 @@
       <div class="card profile-card">
         <div class="profile-row">
           <span>Напоминания</span>
-          <button id="reminderSwitch" class="switch on" onclick="toggleSwitch('reminderSwitch')"></button>
+          <button
+            id="reminderSwitch"
+            class="switch on"
+            onclick="toggleSwitch('reminderSwitch')"
+          ></button>
         </div>
 
         <div class="profile-row">
           <span>Недельный обзор</span>
-          <button id="reviewSwitch" class="switch on" onclick="toggleSwitch('reviewSwitch')"></button>
+          <button
+            id="reviewSwitch"
+            class="switch on"
+            onclick="toggleSwitch('reviewSwitch')"
+          ></button>
         </div>
 
         <div class="profile-row">
           <span>Тёмная тема</span>
-          <button id="themeSwitch" class="switch on" onclick="toggleSwitch('themeSwitch')"></button>
+          <button
+            id="themeSwitch"
+            class="switch on"
+            onclick="toggleSwitch('themeSwitch')"
+          ></button>
         </div>
       </div>
     </section>
@@ -988,49 +1039,117 @@
       </div>
 
       <label for="taskTitle">Название задачи</label>
-      <input id="taskTitle" type="text" placeholder="Например, записаться к врачу">
+      <input
+        id="taskTitle"
+        type="text"
+        maxlength="100"
+        placeholder="Например, записаться к врачу"
+      >
 
-     <label for="taskDate">Дата</label>
-<input id="taskDate" type="date">
+      <label for="taskDate">Дата</label>
+      <input id="taskDate" type="date">
 
-<label for="taskStart">Время начала</label>
-<input id="taskStart" type="time" value="09:00">
+      <label for="taskStart">Время начала</label>
+      <input id="taskStart" type="time" value="09:00">
 
-<label for="taskEnd">Время окончания</label>
-<input id="taskEnd" type="time" value="10:00">
+      <label for="taskEnd">Время окончания</label>
+      <input id="taskEnd" type="time" value="10:00">
 
-      <button class="primary-button" onclick="addTask()">Сохранить задачу</button>
+      <button class="primary-button" onclick="addTask()">
+        Сохранить задачу
+      </button>
     </div>
   </div>
 
   <script>
+    function localDateToISO(date) {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, "0");
+      const day = String(date.getDate()).padStart(2, "0");
+
+      return `${year}-${month}-${day}`;
+    }
+
+    function dateFromISO(isoDate) {
+      return new Date(`${isoDate}T12:00:00`);
+    }
+
+    function todayISO() {
+      return localDateToISO(new Date());
+    }
+
+    function formatDate(isoDate) {
+      const date = dateFromISO(isoDate);
+
+      return new Intl.DateTimeFormat("ru-RU", {
+        day: "numeric",
+        month: "long",
+        year: "numeric"
+      }).format(date);
+    }
+
+    function formatMonth(date) {
+      return new Intl.DateTimeFormat("ru-RU", {
+        month: "long",
+        year: "numeric"
+      }).format(date);
+    }
+
+    function escapeHTML(value) {
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;");
+    }
+
+    const initialDate = todayISO();
+
     const defaultState = {
+      profile: {
+        name: "Алекс",
+        goal: "Меньше хаоса"
+      },
+
       events: [
         {
-          time: "10:00",
+          id: 1,
+          date: initialDate,
+          start: "10:00",
+          end: "11:00",
           title: "Командная встреча",
           color: "blue",
           icon: "●"
         },
         {
-          time: "12:30",
+          id: 2,
+          date: initialDate,
+          start: "12:30",
+          end: "13:30",
           title: "Обед и отдых",
           color: "mint",
           icon: "○"
         },
         {
-          time: "14:00",
+          id: 3,
+          date: initialDate,
+          start: "14:00",
+          end: "15:30",
           title: "Фокус на проекте",
           color: "coral",
           icon: "✦"
         },
         {
-          time: "16:00",
+          id: 4,
+          date: initialDate,
+          start: "16:00",
+          end: "17:00",
           title: "Тренировка",
           color: "orange",
           icon: "◒"
         }
       ],
+
       habits: [
         {
           id: 1,
@@ -1054,6 +1173,7 @@
           done: false
         }
       ],
+
       shopping: [
         {
           id: 1,
@@ -1083,23 +1203,63 @@
       ]
     };
 
-    let state = JSON.parse(
-      localStorage.getItem("dopaminePlannerState")
-    ) || defaultState;
+    let state;
+
+    try {
+      state = JSON.parse(
+        localStorage.getItem("dopaminePlannerState")
+      ) || defaultState;
+    } catch {
+      state = defaultState;
+    }
+
+    if (!state.profile) {
+      state.profile = {
+        name: "Алекс",
+        goal: "Меньше хаоса"
+      };
+    }
+
+    if (!Array.isArray(state.events)) {
+      state.events = [];
+    }
+
+    if (!Array.isArray(state.habits)) {
+      state.habits = defaultState.habits;
+    }
+
+    if (!Array.isArray(state.shopping)) {
+      state.shopping = defaultState.shopping;
+    }
+
+    state.events = state.events.map((event, index) => {
+      return {
+        id: event.id || Date.now() + index,
+        date: event.date || todayISO(),
+        start: event.start || event.time || "09:00",
+        end: event.end || "10:00",
+        title: event.title || "Новая задача",
+        color: event.color || "purple",
+        icon: event.icon || "✓"
+      };
+    });
+
+    let selectedDate = localStorage.getItem(
+      "selectedPlannerDate"
+    ) || todayISO();
+
+    let visibleMonth = dateFromISO(selectedDate);
 
     function saveState() {
       localStorage.setItem(
         "dopaminePlannerState",
         JSON.stringify(state)
       );
-    }
 
-    function escapeHTML(value) {
-      return value
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;");
+      localStorage.setItem(
+        "selectedPlannerDate",
+        selectedDate
+      );
     }
 
     function showPage(pageId) {
@@ -1121,40 +1281,162 @@
         activeButton.classList.add("active");
       }
 
-      document.getElementById("moduleContent").innerHTML = "";
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      if (pageId !== "organizer") {
+        document.getElementById("moduleContent").innerHTML = "";
+      }
+
+      if (pageId === "planner") {
+        renderPlannerDate();
+        renderWeek();
+        renderEvents();
+      }
+
+      if (pageId === "profile") {
+        renderProfile();
+      }
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+    }
+
+    function changeMonth(direction) {
+      visibleMonth = new Date(
+        visibleMonth.getFullYear(),
+        visibleMonth.getMonth() + direction,
+        1
+      );
+
+      renderCalendar();
+    }
+
+    function selectDate(isoDate) {
+      selectedDate = isoDate;
+      visibleMonth = dateFromISO(isoDate);
+
+      saveState();
+      renderCalendar();
+      renderPlannerDate();
+      renderWeek();
+      renderEvents();
+      showPage("planner");
     }
 
     function renderCalendar() {
       const weekdays = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
-      const firstDayOffset = 3;
-      const daysCount = 31;
+      const year = visibleMonth.getFullYear();
+      const month = visibleMonth.getMonth();
+      const monthStart = new Date(year, month, 1);
+      const monthEnd = new Date(year, month + 1, 0);
+      const firstDayOffset = (monthStart.getDay() + 6) % 7;
+      const daysCount = monthEnd.getDate();
+
       let html = "";
+
+      document.getElementById("calendarTitle").textContent = formatMonth(
+        visibleMonth
+      );
 
       weekdays.forEach((day) => {
         html += `<div class="weekday">${day}</div>`;
       });
 
-      for (let day = 0; day < firstDayOffset; day++) {
+      for (let index = 0; index < firstDayOffset; index++) {
         html += `<div class="calendar-day empty">0</div>`;
       }
 
       for (let day = 1; day <= daysCount; day++) {
-        const className = day === 15 ? "calendar-day today" : "calendar-day";
-        html += `<div class="${className}">${day}</div>`;
+        const date = new Date(year, month, day);
+        const isoDate = localDateToISO(date);
+        const isToday = isoDate === todayISO();
+        const isSelected = isoDate === selectedDate;
+
+        let className = "calendar-day";
+
+        if (isToday) {
+          className += " today";
+        }
+
+        if (isSelected) {
+          className += " selected-date";
+        }
+
+        html += `
+          <button
+            class="${className}"
+            onclick="selectDate('${isoDate}')"
+            aria-label="Открыть ${formatDate(isoDate)}"
+          >
+            ${day}
+          </button>
+        `;
       }
 
       document.getElementById("monthCalendar").innerHTML = html;
+    }
+
+    function renderPlannerDate() {
+      const date = dateFromISO(selectedDate);
+
+      document.getElementById("plannerMonthLabel").textContent = formatMonth(
+        date
+      );
+
+      document.getElementById("plannerDateTitle").textContent = formatDate(
+        selectedDate
+      );
+    }
+
+    function renderWeek() {
+      const selected = dateFromISO(selectedDate);
+      const weekday = (selected.getDay() + 6) % 7;
+      const monday = new Date(selected);
+
+      monday.setDate(selected.getDate() - weekday);
+
+      let html = "";
+
+      for (let index = 0; index < 7; index++) {
+        const day = new Date(monday);
+
+        day.setDate(monday.getDate() + index);
+
+        const isoDate = localDateToISO(day);
+        const selectedClass = isoDate === selectedDate ? "selected" : "";
+
+        const shortDay = new Intl.DateTimeFormat("ru-RU", {
+          weekday: "short"
+        })
+          .format(day)
+          .replace(".", "");
+
+        html += `
+          <button
+            class="week-day ${selectedClass}"
+            onclick="selectDate('${isoDate}')"
+          >
+            ${shortDay}
+            <strong>${day.getDate()}</strong>
+          </button>
+        `;
+      }
+
+      document.getElementById("weekGrid").innerHTML = html;
     }
 
     function eventClass(color) {
       return `event-${color}`;
     }
 
+    function eventTimeText(event) {
+      return `${event.start}–${event.end}`;
+    }
+
     function renderEvent(event) {
       return `
         <div class="event-card ${eventClass(event.color)}">
-          <span class="event-time">${escapeHTML(event.time)}</span>
+          <span class="event-time">${escapeHTML(eventTimeText(event))}</span>
           <span class="event-icon">${escapeHTML(event.icon)}</span>
           <span>${escapeHTML(event.title)}</span>
         </div>
@@ -1162,35 +1444,47 @@
     }
 
     function renderEvents() {
-      const homeEvents = state.events
-        .slice(0, 2)
-        .map(renderEvent)
-        .join("");
+      const dateEvents = state.events
+        .filter((event) => event.date === selectedDate)
+        .sort((first, second) => {
+          return first.start.localeCompare(second.start);
+        });
 
-      const plannerEvents = state.events
-        .map((event) => {
-          return `
-            <div class="planner-event">
-              <div class="planner-time">${escapeHTML(event.time)}</div>
-              ${renderEvent(event)}
-            </div>
-          `;
-        })
-        .join("");
+      const emptyMessage = `
+        <div class="card" style="padding: 18px; color: var(--muted)">
+          На эту дату пока нет задач.
+        </div>
+      `;
 
-      document.getElementById("homeEvents").innerHTML = homeEvents;
-      document.getElementById("plannerEvents").innerHTML = plannerEvents;
+      const homeTitle = document.getElementById("homeScheduleTitle");
+
+      homeTitle.textContent = `Расписание на ${formatDate(selectedDate)}`;
+
+      document.getElementById("homeEvents").innerHTML = dateEvents.length
+        ? dateEvents.map(renderEvent).join("")
+        : emptyMessage;
+
+      document.getElementById("plannerEvents").innerHTML = dateEvents.length
+        ? dateEvents.map((event) => {
+            return `
+              <div class="planner-event">
+                <div class="planner-time">${escapeHTML(eventTimeText(event))}</div>
+                ${renderEvent(event)}
+              </div>
+            `;
+          }).join("")
+        : emptyMessage;
     }
 
     function renderHabits() {
       const habitsHTML = state.habits
         .map((habit) => {
-          const completed = habit.done ? "done" : "";
+          const completedClass = habit.done ? "done" : "";
           const label = habit.done ? "Готово" : `${habit.days} дней`;
 
           return `
             <button
-              class="habit ${completed}"
+              class="habit ${completedClass}"
               style="background: var(--${habit.color})"
               onclick="toggleHabit(${habit.id})"
             >
@@ -1216,73 +1510,97 @@
       renderHabits();
     }
 
-    function renderWeek() {
-      const days = [
-        ["Пн", "14"],
-        ["Вт", "15"],
-        ["Ср", "16"],
-        ["Чт", "17"],
-        ["Пт", "18"],
-        ["Сб", "19"],
-        ["Вс", "20"]
-      ];
-
-      document.getElementById("weekGrid").innerHTML = days
-        .map((day, index) => {
-          const selected = index === 1 ? "selected" : "";
-
-          return `
-            <button class="week-day ${selected}" onclick="selectDay(this)">
-              ${day[0]}
-              <strong>${day[1]}</strong>
-            </button>
-          `;
-        })
-        .join("");
-    }
-
-    function selectDay(button) {
-      document.querySelectorAll(".week-day").forEach((item) => {
-        item.classList.remove("selected");
-      });
-
-      button.classList.add("selected");
-    }
-
     function openTaskModal() {
+      document.getElementById("taskDate").value = selectedDate;
+      document.getElementById("taskStart").value = "09:00";
+      document.getElementById("taskEnd").value = "10:00";
+
       document.getElementById("taskModal").classList.add("open");
-      document.getElementById("taskTitle").focus();
+
+      setTimeout(() => {
+        document.getElementById("taskTitle").focus();
+      }, 150);
     }
 
     function closeTaskModal() {
       document.getElementById("taskModal").classList.remove("open");
       document.getElementById("taskTitle").value = "";
-      document.getElementById("taskTime").value = "09:00";
     }
 
     function addTask() {
       const titleInput = document.getElementById("taskTitle");
-      const timeInput = document.getElementById("taskTime");
+      const dateInput = document.getElementById("taskDate");
+      const startInput = document.getElementById("taskStart");
+      const endInput = document.getElementById("taskEnd");
+
       const title = titleInput.value.trim();
-      const time = timeInput.value;
+      const date = dateInput.value;
+      const start = startInput.value;
+      const end = endInput.value;
 
       if (!title) {
         titleInput.focus();
         return;
       }
 
+      if (!date || !start || !end) {
+        alert("Укажите дату, время начала и время окончания.");
+        return;
+      }
+
+      if (end <= start) {
+        alert("Время окончания должно быть позже времени начала.");
+        return;
+      }
+
       state.events.push({
-        time: time || "09:00",
+        id: Date.now(),
+        date: date,
+        start: start,
+        end: end,
         title: title,
         color: "purple",
         icon: "✓"
       });
 
-      state.events.sort((a, b) => a.time.localeCompare(b.time));
+      selectedDate = date;
+      visibleMonth = dateFromISO(date);
+
       saveState();
+      renderCalendar();
+      renderPlannerDate();
+      renderWeek();
       renderEvents();
       closeTaskModal();
       showPage("planner");
+    }
+
+    function renderProfile() {
+      const nameInput = document.getElementById("profileName");
+      const goalInput = document.getElementById("profileGoal");
+      const homeName = document.getElementById("homeName");
+
+      nameInput.value = state.profile.name || "";
+      goalInput.value = state.profile.goal || "";
+      homeName.textContent = state.profile.name || "Алекс";
+    }
+
+    function saveProfile() {
+      const nameInput = document.getElementById("profileName");
+      const goalInput = document.getElementById("profileGoal");
+      const message = document.getElementById("profileSaveMessage");
+
+      state.profile.name = nameInput.value.trim() || "Алекс";
+      state.profile.goal = goalInput.value.trim() || "Меньше хаоса";
+
+      saveState();
+      renderProfile();
+
+      message.textContent = "Изменения сохранены";
+
+      setTimeout(() => {
+        message.textContent = "";
+      }, 2500);
     }
 
     function openModule(moduleName) {
@@ -1313,22 +1631,29 @@
 
         budget: `
           <h2 class="section-title">Бюджет за октябрь</h2>
+
           <div class="card finance-card">
             <h3>Общий баланс</h3>
+
             <div class="finance-head">
               <div class="income">
                 <small>Доходы</small>
                 <h2>120 000 ₽</h2>
               </div>
+
               <div class="expense">
                 <small>Расходы</small>
                 <h2>74 350 ₽</h2>
               </div>
             </div>
-            <div class="progress"><div style="width: 62%"></div></div>
+
+            <div class="progress">
+              <div style="width: 62%"></div>
+            </div>
           </div>
 
           <h2 class="section-title">Категории расходов</h2>
+
           <div class="card list-card">
             ${listRow("▥", "Жильё", "45 000 ₽", "blue-bg")}
             ${listRow("▥", "Еда", "16 200 ₽", "orange-bg")}
@@ -1339,6 +1664,7 @@
 
         bills: `
           <h2 class="section-title">Ежемесячные платежи</h2>
+
           <div class="card list-card">
             ${listRow("✓", "Аренда", "1 октября · 45 000 ₽ · Оплачено", "mint-bg")}
             ${listRow("✓", "Интернет", "10 октября · 790 ₽ · Оплачено", "mint-bg")}
@@ -1348,6 +1674,7 @@
 
         watchlist: `
           <h2 class="section-title">Посмотреть позже</h2>
+
           <div class="card list-card">
             ${listRow("▶", "The Bear", "Сезон 3", "purple-bg")}
             ${listRow("▶", "Дюна: Часть вторая", "Фильм", "purple-bg")}
@@ -1385,8 +1712,11 @@
               >
                 ✓
               </button>
+
               <div class="row-content">
-                <strong class="${textClass}">${escapeHTML(item.title)}</strong>
+                <strong class="${textClass}">
+                  ${escapeHTML(item.title)}
+                </strong>
               </div>
             </div>
           `;
@@ -1395,10 +1725,14 @@
 
       return `
         <h2 class="section-title">Список покупок</h2>
+
         <div class="input-row">
           <input id="shoppingInput" placeholder="Добавить товар">
-          <button class="primary-button" onclick="addShoppingItem()">Добавить</button>
+          <button class="primary-button" onclick="addShoppingItem()">
+            Добавить
+          </button>
         </div>
+
         <div class="card list-card">${items}</div>
       `;
     }
@@ -1439,645 +1773,12 @@
     }
 
     renderCalendar();
-    renderEvents();
-    renderHabits();
-    renderWeek();
-  <script>
-  function localDateToISO(date) {
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const day = String(date.getDate()).padStart(2, "0");
-
-    return `${year}-${month}-${day}`;
-  }
-
-  function dateFromISO(isoDate) {
-    return new Date(`${isoDate}T12:00:00`);
-  }
-
-  function todayISO() {
-    return localDateToISO(new Date());
-  }
-
-  function formatDate(isoDate) {
-    const date = dateFromISO(isoDate);
-
-    return new Intl.DateTimeFormat("ru-RU", {
-      day: "numeric",
-      month: "long",
-      year: "numeric"
-    }).format(date);
-  }
-
-  function formatShortDate(isoDate) {
-    const date = dateFromISO(isoDate);
-
-    return new Intl.DateTimeFormat("ru-RU", {
-      day: "numeric",
-      month: "long"
-    }).format(date);
-  }
-
-  function formatMonth(date) {
-    return new Intl.DateTimeFormat("ru-RU", {
-      month: "long",
-      year: "numeric"
-    }).format(date);
-  }
-
-  const initialDate = todayISO();
-
-  const defaultState = {
-    events: [
-      {
-        id: 1,
-        date: initialDate,
-        start: "10:00",
-        end: "11:00",
-        title: "Командная встреча",
-        color: "blue",
-        icon: "●"
-      },
-      {
-        id: 2,
-        date: initialDate,
-        start: "12:30",
-        end: "13:30",
-        title: "Обед и отдых",
-        color: "mint",
-        icon: "○"
-      },
-      {
-        id: 3,
-        date: initialDate,
-        start: "14:00",
-        end: "15:30",
-        title: "Фокус на проекте",
-        color: "coral",
-        icon: "✦"
-      },
-      {
-        id: 4,
-        date: initialDate,
-        start: "16:00",
-        end: "17:00",
-        title: "Тренировка",
-        color: "orange",
-        icon: "◒"
-      }
-    ],
-
-    habits: [
-      {
-        id: 1,
-        title: "Вода",
-        days: 7,
-        color: "blue",
-        done: false
-      },
-      {
-        id: 2,
-        title: "Прогулка",
-        days: 3,
-        color: "orange",
-        done: false
-      },
-      {
-        id: 3,
-        title: "Чтение",
-        days: 5,
-        color: "mint",
-        done: false
-      }
-    ],
-
-    shopping: [
-      {
-        id: 1,
-        title: "Молоко",
-        done: true
-      },
-      {
-        id: 2,
-        title: "Яйца",
-        done: false
-      },
-      {
-        id: 3,
-        title: "Хлеб",
-        done: false
-      },
-      {
-        id: 4,
-        title: "Яблоки",
-        done: false
-      },
-      {
-        id: 5,
-        title: "Кофе",
-        done: false
-      }
-    ]
-  };
-
-  let state = JSON.parse(
-    localStorage.getItem("dopaminePlannerState")
-  ) || defaultState;
-
-  state.events = state.events.map((event, index) => {
-    return {
-      id: event.id || Date.now() + index,
-      date: event.date || todayISO(),
-      start: event.start || event.time || "09:00",
-      end: event.end || "10:00",
-      title: event.title || "Новая задача",
-      color: event.color || "purple",
-      icon: event.icon || "✓"
-    };
-  });
-
-  let selectedDate = localStorage.getItem("selectedPlannerDate") || todayISO();
-  let visibleMonth = dateFromISO(selectedDate);
-
-  function saveState() {
-    localStorage.setItem(
-      "dopaminePlannerState",
-      JSON.stringify(state)
-    );
-
-    localStorage.setItem(
-      "selectedPlannerDate",
-      selectedDate
-    );
-  }
-
-  function escapeHTML(value) {
-    return String(value)
-      .replaceAll("&", "&amp;")
-      .replaceAll("<", "&lt;")
-      .replaceAll(">", "&gt;")
-      .replaceAll('"', "&quot;");
-  }
-
-  function showPage(pageId) {
-    document.querySelectorAll(".page").forEach((page) => {
-      page.classList.remove("active");
-    });
-
-    document.querySelectorAll(".nav-button").forEach((button) => {
-      button.classList.remove("active");
-    });
-
-    document.getElementById(pageId).classList.add("active");
-
-    const activeButton = document.querySelector(
-      `.nav-button[data-page="${pageId}"]`
-    );
-
-    if (activeButton) {
-      activeButton.classList.add("active");
-    }
-
-    document.getElementById("moduleContent").innerHTML = "";
-
-    if (pageId === "planner") {
-      renderPlannerDate();
-      renderWeek();
-      renderEvents();
-    }
-
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth"
-    });
-  }
-
-  function changeMonth(direction) {
-    visibleMonth = new Date(
-      visibleMonth.getFullYear(),
-      visibleMonth.getMonth() + direction,
-      1
-    );
-
-    renderCalendar();
-  }
-
-  function renderCalendar() {
-    const weekdays = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
-    const year = visibleMonth.getFullYear();
-    const month = visibleMonth.getMonth();
-    const monthStart = new Date(year, month, 1);
-    const monthEnd = new Date(year, month + 1, 0);
-    const firstDayOffset = (monthStart.getDay() + 6) % 7;
-    const daysCount = monthEnd.getDate();
-
-    let html = "";
-
-    document.getElementById("calendarTitle").textContent = formatMonth(
-      visibleMonth
-    );
-
-    weekdays.forEach((day) => {
-      html += `<div class="weekday">${day}</div>`;
-    });
-
-    for (let day = 0; day < firstDayOffset; day++) {
-      html += `<div class="calendar-day empty">0</div>`;
-    }
-
-    for (let day = 1; day <= daysCount; day++) {
-      const date = new Date(year, month, day);
-      const isoDate = localDateToISO(date);
-      const isToday = isoDate === todayISO();
-      const isSelected = isoDate === selectedDate;
-
-      let className = "calendar-day";
-
-      if (isToday) {
-        className += " today";
-      }
-
-      if (isSelected) {
-        className += " selected-date";
-      }
-
-      html += `
-        <button
-          class="${className}"
-          onclick="selectDate('${isoDate}')"
-          aria-label="Открыть ${formatDate(isoDate)}"
-        >
-          ${day}
-        </button>
-      `;
-    }
-
-    document.getElementById("monthCalendar").innerHTML = html;
-  }
-
-  function selectDate(isoDate) {
-    selectedDate = isoDate;
-    visibleMonth = dateFromISO(isoDate);
-
-    saveState();
-    renderCalendar();
     renderPlannerDate();
     renderWeek();
     renderEvents();
-    showPage("planner");
-  }
-
-  function renderPlannerDate() {
-    const date = dateFromISO(selectedDate);
-
-    document.getElementById("plannerMonthLabel").textContent = formatMonth(date);
-    document.getElementById("plannerDateTitle").textContent = formatDate(
-      selectedDate
-    );
-  }
-
-  function renderWeek() {
-    const selected = dateFromISO(selectedDate);
-    const weekday = (selected.getDay() + 6) % 7;
-    const monday = new Date(selected);
-
-    monday.setDate(selected.getDate() - weekday);
-
-    let html = "";
-
-    for (let index = 0; index < 7; index++) {
-      const day = new Date(monday);
-
-      day.setDate(monday.getDate() + index);
-
-      const isoDate = localDateToISO(day);
-      const isSelected = isoDate === selectedDate ? "selected" : "";
-
-      const shortDay = new Intl.DateTimeFormat("ru-RU", {
-        weekday: "short"
-      })
-        .format(day)
-        .replace(".", "");
-
-      html += `
-        <button
-          class="week-day ${isSelected}"
-          onclick="selectDate('${isoDate}')"
-        >
-          ${shortDay}
-          <strong>${day.getDate()}</strong>
-        </button>
-      `;
-    }
-
-    document.getElementById("weekGrid").innerHTML = html;
-  }
-
-  function eventClass(color) {
-    return `event-${color}`;
-  }
-
-  function eventTimeText(event) {
-    return `${event.start}–${event.end}`;
-  }
-
-  function renderEvent(event) {
-    return `
-      <div class="event-card ${eventClass(event.color)}">
-        <span class="event-time">${escapeHTML(eventTimeText(event))}</span>
-        <span class="event-icon">${escapeHTML(event.icon)}</span>
-        <span>${escapeHTML(event.title)}</span>
-      </div>
-    `;
-  }
-
-  function renderEvents() {
-    const dateEvents = state.events
-      .filter((event) => event.date === selectedDate)
-      .sort((first, second) => {
-        return first.start.localeCompare(second.start);
-      });
-
-    const emptyMessage = `
-      <div class="card" style="padding: 18px; color: var(--muted)">
-        На эту дату пока нет задач.
-      </div>
-    `;
-
-    const eventsHTML = dateEvents.length
-      ? dateEvents.map(renderEvent).join("")
-      : emptyMessage;
-
-    document.getElementById("homeEvents").innerHTML = eventsHTML;
-    document.getElementById("plannerEvents").innerHTML = dateEvents.length
-      ? dateEvents.map((event) => {
-          return `
-            <div class="planner-event">
-              <div class="planner-time">${escapeHTML(eventTimeText(event))}</div>
-              ${renderEvent(event)}
-            </div>
-          `;
-        }).join("")
-      : emptyMessage;
-  }
-
-  function renderHabits() {
-    const habitsHTML = state.habits
-      .map((habit) => {
-        const completed = habit.done ? "done" : "";
-        const label = habit.done ? "Готово" : `${habit.days} дней`;
-
-        return `
-          <button
-            class="habit ${completed}"
-            style="background: var(--${habit.color})"
-            onclick="toggleHabit(${habit.id})"
-          >
-            <strong>${habit.done ? "✓ " : ""}${escapeHTML(habit.title)}</strong>
-            <small>${label}</small>
-          </button>
-        `;
-      })
-      .join("");
-
-    document.getElementById("habitList").innerHTML = habitsHTML;
-  }
-
-  function toggleHabit(id) {
-    const habit = state.habits.find((item) => item.id === id);
-
-    if (!habit) {
-      return;
-    }
-
-    habit.done = !habit.done;
-    saveState();
     renderHabits();
-  }
-
-  function openTaskModal() {
-    document.getElementById("taskDate").value = selectedDate;
-    document.getElementById("taskStart").value = "09:00";
-    document.getElementById("taskEnd").value = "10:00";
-
-    document.getElementById("taskModal").classList.add("open");
-
-    setTimeout(() => {
-      document.getElementById("taskTitle").focus();
-    }, 150);
-  }
-
-  function closeTaskModal() {
-    document.getElementById("taskModal").classList.remove("open");
-    document.getElementById("taskTitle").value = "";
-  }
-
-  function addTask() {
-    const titleInput = document.getElementById("taskTitle");
-    const dateInput = document.getElementById("taskDate");
-    const startInput = document.getElementById("taskStart");
-    const endInput = document.getElementById("taskEnd");
-
-    const title = titleInput.value.trim();
-    const date = dateInput.value;
-    const start = startInput.value;
-    const end = endInput.value;
-
-    if (!title) {
-      titleInput.focus();
-      return;
-    }
-
-    if (!date || !start || !end) {
-      alert("Укажите дату, время начала и время окончания.");
-      return;
-    }
-
-    if (end <= start) {
-      alert("Время окончания должно быть позже времени начала.");
-      return;
-    }
-
-    state.events.push({
-      id: Date.now(),
-      date: date,
-      start: start,
-      end: end,
-      title: title,
-      color: "purple",
-      icon: "✓"
-    });
-
-    selectedDate = date;
-    visibleMonth = dateFromISO(date);
-
+    renderProfile();
     saveState();
-    renderCalendar();
-    renderPlannerDate();
-    renderWeek();
-    renderEvents();
-    closeTaskModal();
-    showPage("planner");
-  }
-
-  function openModule(moduleName) {
-    showPage("organizer");
-
-    const content = document.getElementById("moduleContent");
-
-    const templates = {
-      birthdays: `
-        <h2 class="section-title">Ближайшие дни рождения</h2>
-        <div class="card list-card">
-          ${listRow("★", "Мама", "20 октября", "pink-bg")}
-          ${listRow("★", "Сара", "25 октября", "pink-bg")}
-          ${listRow("★", "Илья", "2 ноября", "pink-bg")}
-        </div>
-      `,
-
-      wishlist: `
-        <h2 class="section-title">Мой вишлист</h2>
-        <div class="card list-card">
-          ${listRow("♥", "Новые наушники", "Техника", "coral-bg")}
-          ${listRow("♥", "Аэрогриль", "Дом", "coral-bg")}
-          ${listRow("♥", "Книга", "Хобби", "coral-bg")}
-        </div>
-      `,
-
-      shopping: shoppingTemplate(),
-
-      budget: `
-        <h2 class="section-title">Бюджет за октябрь</h2>
-        <div class="card finance-card">
-          <h3>Общий баланс</h3>
-          <div class="finance-head">
-            <div class="income">
-              <small>Доходы</small>
-              <h2>120 000 ₽</h2>
-            </div>
-            <div class="expense">
-              <small>Расходы</small>
-              <h2>74 350 ₽</h2>
-            </div>
-          </div>
-          <div class="progress"><div style="width: 62%"></div></div>
-        </div>
-
-        <h2 class="section-title">Категории расходов</h2>
-        <div class="card list-card">
-          ${listRow("▥", "Жильё", "45 000 ₽", "blue-bg")}
-          ${listRow("▥", "Еда", "16 200 ₽", "orange-bg")}
-          ${listRow("▥", "Транспорт", "5 150 ₽", "mint-bg")}
-          ${listRow("▥", "Развлечения", "8 000 ₽", "purple-bg")}
-        </div>
-      `,
-
-      bills: `
-        <h2 class="section-title">Ежемесячные платежи</h2>
-        <div class="card list-card">
-          ${listRow("✓", "Аренда", "1 октября · 45 000 ₽ · Оплачено", "mint-bg")}
-          ${listRow("✓", "Интернет", "10 октября · 790 ₽ · Оплачено", "mint-bg")}
-          ${listRow("!", "Электричество", "18 октября · 1 800 ₽ · Осталось 3 дня", "coral-bg")}
-        </div>
-      `,
-
-      watchlist: `
-        <h2 class="section-title">Посмотреть позже</h2>
-        <div class="card list-card">
-          ${listRow("▶", "The Bear", "Сезон 3", "purple-bg")}
-          ${listRow("▶", "Дюна: Часть вторая", "Фильм", "purple-bg")}
-          ${listRow("▶", "Разделение", "Сезон 2", "purple-bg")}
-        </div>
-      `
-    };
-
-    content.innerHTML = templates[moduleName] || "";
-  }
-
-  function listRow(icon, title, subtitle, className) {
-    return `
-      <div class="list-row">
-        <div class="row-icon ${className}">${icon}</div>
-        <div class="row-content">
-          <strong>${title}</strong>
-          <small>${subtitle}</small>
-        </div>
-      </div>
-    `;
-  }
-
-  function shoppingTemplate() {
-    const items = state.shopping
-      .map((item) => {
-        const checkedClass = item.done ? "checked" : "";
-        const textClass = item.done ? "checked-text" : "";
-
-        return `
-          <div class="list-row">
-            <button
-              class="check-button ${checkedClass}"
-              onclick="toggleShopping(${item.id})"
-            >
-              ✓
-            </button>
-            <div class="row-content">
-              <strong class="${textClass}">${escapeHTML(item.title)}</strong>
-            </div>
-          </div>
-        `;
-      })
-      .join("");
-
-    return `
-      <h2 class="section-title">Список покупок</h2>
-      <div class="input-row">
-        <input id="shoppingInput" placeholder="Добавить товар">
-        <button class="primary-button" onclick="addShoppingItem()">Добавить</button>
-      </div>
-      <div class="card list-card">${items}</div>
-    `;
-  }
-
-  function toggleShopping(id) {
-    const item = state.shopping.find((product) => product.id === id);
-
-    if (!item) {
-      return;
-    }
-
-    item.done = !item.done;
-    saveState();
-    openModule("shopping");
-  }
-
-  function addShoppingItem() {
-    const input = document.getElementById("shoppingInput");
-    const title = input.value.trim();
-
-    if (!title) {
-      input.focus();
-      return;
-    }
-
-    state.shopping.push({
-      id: Date.now(),
-      title: title,
-      done: false
-    });
-
-    saveState();
-    openModule("shopping");
-  }
-
-  function toggleSwitch(id) {
-    document.getElementById(id).classList.toggle("on");
-  }
-
-  renderCalendar();
-  renderPlannerDate();
-  renderWeek();
-  renderEvents();
-  renderHabits();
-</script>
+  </script>
 </body>
 </html>
