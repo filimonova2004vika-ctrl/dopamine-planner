@@ -813,12 +813,15 @@
         </div>
       </div>
 
-      <div class="card calendar-card">
-        <div class="calendar-header">
-          <span>‹</span>
-          <span>Октябрь 2026</span>
-          <span>›</span>
-        </div>
+     <div class="card calendar-card">
+  <div class="calendar-header">
+    <button class="calendar-nav-button" onclick="changeMonth(-1)">‹</button>
+    <span id="calendarTitle">Календарь</span>
+    <button class="calendar-nav-button" onclick="changeMonth(1)">›</button>
+  </div>
+
+  <div id="monthCalendar" class="calendar-grid"></div>
+</div>
 
         <div id="monthCalendar" class="calendar-grid"></div>
       </div>
@@ -831,13 +834,14 @@
     </section>
 
     <section id="planner" class="page">
-      <div class="topbar">
-        <div>
-          <p class="muted">Октябрь 2026</p>
-          <h1>Планер</h1>
-        </div>
-        <button class="icon-button" onclick="openTaskModal()">+</button>
-      </div>
+     <div class="topbar">
+  <div>
+    <p id="plannerMonthLabel" class="muted">Календарь</p>
+    <h1>Планер</h1>
+    <p id="plannerDateTitle" class="planner-date-label">Выберите дату</p>
+  </div>
+  <button class="icon-button" onclick="openTaskModal()">+</button>
+</div>
 
       <div id="weekGrid" class="week-grid"></div>
 
@@ -989,8 +993,14 @@
       <label for="taskTitle">Название задачи</label>
       <input id="taskTitle" type="text" placeholder="Например, записаться к врачу">
 
-      <label for="taskTime">Время</label>
-      <input id="taskTime" type="time" value="09:00">
+     <label for="taskDate">Дата</label>
+<input id="taskDate" type="date">
+
+<label for="taskStart">Время начала</label>
+<input id="taskStart" type="time" value="09:00">
+
+<label for="taskEnd">Время окончания</label>
+<input id="taskEnd" type="time" value="10:00">
 
       <button class="primary-button" onclick="addTask()">Сохранить задачу</button>
     </div>
@@ -1435,6 +1445,642 @@
     renderEvents();
     renderHabits();
     renderWeek();
-  </script>
+  <script>
+  function localDateToISO(date) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+
+    return `${year}-${month}-${day}`;
+  }
+
+  function dateFromISO(isoDate) {
+    return new Date(`${isoDate}T12:00:00`);
+  }
+
+  function todayISO() {
+    return localDateToISO(new Date());
+  }
+
+  function formatDate(isoDate) {
+    const date = dateFromISO(isoDate);
+
+    return new Intl.DateTimeFormat("ru-RU", {
+      day: "numeric",
+      month: "long",
+      year: "numeric"
+    }).format(date);
+  }
+
+  function formatShortDate(isoDate) {
+    const date = dateFromISO(isoDate);
+
+    return new Intl.DateTimeFormat("ru-RU", {
+      day: "numeric",
+      month: "long"
+    }).format(date);
+  }
+
+  function formatMonth(date) {
+    return new Intl.DateTimeFormat("ru-RU", {
+      month: "long",
+      year: "numeric"
+    }).format(date);
+  }
+
+  const initialDate = todayISO();
+
+  const defaultState = {
+    events: [
+      {
+        id: 1,
+        date: initialDate,
+        start: "10:00",
+        end: "11:00",
+        title: "Командная встреча",
+        color: "blue",
+        icon: "●"
+      },
+      {
+        id: 2,
+        date: initialDate,
+        start: "12:30",
+        end: "13:30",
+        title: "Обед и отдых",
+        color: "mint",
+        icon: "○"
+      },
+      {
+        id: 3,
+        date: initialDate,
+        start: "14:00",
+        end: "15:30",
+        title: "Фокус на проекте",
+        color: "coral",
+        icon: "✦"
+      },
+      {
+        id: 4,
+        date: initialDate,
+        start: "16:00",
+        end: "17:00",
+        title: "Тренировка",
+        color: "orange",
+        icon: "◒"
+      }
+    ],
+
+    habits: [
+      {
+        id: 1,
+        title: "Вода",
+        days: 7,
+        color: "blue",
+        done: false
+      },
+      {
+        id: 2,
+        title: "Прогулка",
+        days: 3,
+        color: "orange",
+        done: false
+      },
+      {
+        id: 3,
+        title: "Чтение",
+        days: 5,
+        color: "mint",
+        done: false
+      }
+    ],
+
+    shopping: [
+      {
+        id: 1,
+        title: "Молоко",
+        done: true
+      },
+      {
+        id: 2,
+        title: "Яйца",
+        done: false
+      },
+      {
+        id: 3,
+        title: "Хлеб",
+        done: false
+      },
+      {
+        id: 4,
+        title: "Яблоки",
+        done: false
+      },
+      {
+        id: 5,
+        title: "Кофе",
+        done: false
+      }
+    ]
+  };
+
+  let state = JSON.parse(
+    localStorage.getItem("dopaminePlannerState")
+  ) || defaultState;
+
+  state.events = state.events.map((event, index) => {
+    return {
+      id: event.id || Date.now() + index,
+      date: event.date || todayISO(),
+      start: event.start || event.time || "09:00",
+      end: event.end || "10:00",
+      title: event.title || "Новая задача",
+      color: event.color || "purple",
+      icon: event.icon || "✓"
+    };
+  });
+
+  let selectedDate = localStorage.getItem("selectedPlannerDate") || todayISO();
+  let visibleMonth = dateFromISO(selectedDate);
+
+  function saveState() {
+    localStorage.setItem(
+      "dopaminePlannerState",
+      JSON.stringify(state)
+    );
+
+    localStorage.setItem(
+      "selectedPlannerDate",
+      selectedDate
+    );
+  }
+
+  function escapeHTML(value) {
+    return String(value)
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;");
+  }
+
+  function showPage(pageId) {
+    document.querySelectorAll(".page").forEach((page) => {
+      page.classList.remove("active");
+    });
+
+    document.querySelectorAll(".nav-button").forEach((button) => {
+      button.classList.remove("active");
+    });
+
+    document.getElementById(pageId).classList.add("active");
+
+    const activeButton = document.querySelector(
+      `.nav-button[data-page="${pageId}"]`
+    );
+
+    if (activeButton) {
+      activeButton.classList.add("active");
+    }
+
+    document.getElementById("moduleContent").innerHTML = "";
+
+    if (pageId === "planner") {
+      renderPlannerDate();
+      renderWeek();
+      renderEvents();
+    }
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  }
+
+  function changeMonth(direction) {
+    visibleMonth = new Date(
+      visibleMonth.getFullYear(),
+      visibleMonth.getMonth() + direction,
+      1
+    );
+
+    renderCalendar();
+  }
+
+  function renderCalendar() {
+    const weekdays = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
+    const year = visibleMonth.getFullYear();
+    const month = visibleMonth.getMonth();
+    const monthStart = new Date(year, month, 1);
+    const monthEnd = new Date(year, month + 1, 0);
+    const firstDayOffset = (monthStart.getDay() + 6) % 7;
+    const daysCount = monthEnd.getDate();
+
+    let html = "";
+
+    document.getElementById("calendarTitle").textContent = formatMonth(
+      visibleMonth
+    );
+
+    weekdays.forEach((day) => {
+      html += `<div class="weekday">${day}</div>`;
+    });
+
+    for (let day = 0; day < firstDayOffset; day++) {
+      html += `<div class="calendar-day empty">0</div>`;
+    }
+
+    for (let day = 1; day <= daysCount; day++) {
+      const date = new Date(year, month, day);
+      const isoDate = localDateToISO(date);
+      const isToday = isoDate === todayISO();
+      const isSelected = isoDate === selectedDate;
+
+      let className = "calendar-day";
+
+      if (isToday) {
+        className += " today";
+      }
+
+      if (isSelected) {
+        className += " selected-date";
+      }
+
+      html += `
+        <button
+          class="${className}"
+          onclick="selectDate('${isoDate}')"
+          aria-label="Открыть ${formatDate(isoDate)}"
+        >
+          ${day}
+        </button>
+      `;
+    }
+
+    document.getElementById("monthCalendar").innerHTML = html;
+  }
+
+  function selectDate(isoDate) {
+    selectedDate = isoDate;
+    visibleMonth = dateFromISO(isoDate);
+
+    saveState();
+    renderCalendar();
+    renderPlannerDate();
+    renderWeek();
+    renderEvents();
+    showPage("planner");
+  }
+
+  function renderPlannerDate() {
+    const date = dateFromISO(selectedDate);
+
+    document.getElementById("plannerMonthLabel").textContent = formatMonth(date);
+    document.getElementById("plannerDateTitle").textContent = formatDate(
+      selectedDate
+    );
+  }
+
+  function renderWeek() {
+    const selected = dateFromISO(selectedDate);
+    const weekday = (selected.getDay() + 6) % 7;
+    const monday = new Date(selected);
+
+    monday.setDate(selected.getDate() - weekday);
+
+    let html = "";
+
+    for (let index = 0; index < 7; index++) {
+      const day = new Date(monday);
+
+      day.setDate(monday.getDate() + index);
+
+      const isoDate = localDateToISO(day);
+      const isSelected = isoDate === selectedDate ? "selected" : "";
+
+      const shortDay = new Intl.DateTimeFormat("ru-RU", {
+        weekday: "short"
+      })
+        .format(day)
+        .replace(".", "");
+
+      html += `
+        <button
+          class="week-day ${isSelected}"
+          onclick="selectDate('${isoDate}')"
+        >
+          ${shortDay}
+          <strong>${day.getDate()}</strong>
+        </button>
+      `;
+    }
+
+    document.getElementById("weekGrid").innerHTML = html;
+  }
+
+  function eventClass(color) {
+    return `event-${color}`;
+  }
+
+  function eventTimeText(event) {
+    return `${event.start}–${event.end}`;
+  }
+
+  function renderEvent(event) {
+    return `
+      <div class="event-card ${eventClass(event.color)}">
+        <span class="event-time">${escapeHTML(eventTimeText(event))}</span>
+        <span class="event-icon">${escapeHTML(event.icon)}</span>
+        <span>${escapeHTML(event.title)}</span>
+      </div>
+    `;
+  }
+
+  function renderEvents() {
+    const dateEvents = state.events
+      .filter((event) => event.date === selectedDate)
+      .sort((first, second) => {
+        return first.start.localeCompare(second.start);
+      });
+
+    const emptyMessage = `
+      <div class="card" style="padding: 18px; color: var(--muted)">
+        На эту дату пока нет задач.
+      </div>
+    `;
+
+    const eventsHTML = dateEvents.length
+      ? dateEvents.map(renderEvent).join("")
+      : emptyMessage;
+
+    document.getElementById("homeEvents").innerHTML = eventsHTML;
+    document.getElementById("plannerEvents").innerHTML = dateEvents.length
+      ? dateEvents.map((event) => {
+          return `
+            <div class="planner-event">
+              <div class="planner-time">${escapeHTML(eventTimeText(event))}</div>
+              ${renderEvent(event)}
+            </div>
+          `;
+        }).join("")
+      : emptyMessage;
+  }
+
+  function renderHabits() {
+    const habitsHTML = state.habits
+      .map((habit) => {
+        const completed = habit.done ? "done" : "";
+        const label = habit.done ? "Готово" : `${habit.days} дней`;
+
+        return `
+          <button
+            class="habit ${completed}"
+            style="background: var(--${habit.color})"
+            onclick="toggleHabit(${habit.id})"
+          >
+            <strong>${habit.done ? "✓ " : ""}${escapeHTML(habit.title)}</strong>
+            <small>${label}</small>
+          </button>
+        `;
+      })
+      .join("");
+
+    document.getElementById("habitList").innerHTML = habitsHTML;
+  }
+
+  function toggleHabit(id) {
+    const habit = state.habits.find((item) => item.id === id);
+
+    if (!habit) {
+      return;
+    }
+
+    habit.done = !habit.done;
+    saveState();
+    renderHabits();
+  }
+
+  function openTaskModal() {
+    document.getElementById("taskDate").value = selectedDate;
+    document.getElementById("taskStart").value = "09:00";
+    document.getElementById("taskEnd").value = "10:00";
+
+    document.getElementById("taskModal").classList.add("open");
+
+    setTimeout(() => {
+      document.getElementById("taskTitle").focus();
+    }, 150);
+  }
+
+  function closeTaskModal() {
+    document.getElementById("taskModal").classList.remove("open");
+    document.getElementById("taskTitle").value = "";
+  }
+
+  function addTask() {
+    const titleInput = document.getElementById("taskTitle");
+    const dateInput = document.getElementById("taskDate");
+    const startInput = document.getElementById("taskStart");
+    const endInput = document.getElementById("taskEnd");
+
+    const title = titleInput.value.trim();
+    const date = dateInput.value;
+    const start = startInput.value;
+    const end = endInput.value;
+
+    if (!title) {
+      titleInput.focus();
+      return;
+    }
+
+    if (!date || !start || !end) {
+      alert("Укажите дату, время начала и время окончания.");
+      return;
+    }
+
+    if (end <= start) {
+      alert("Время окончания должно быть позже времени начала.");
+      return;
+    }
+
+    state.events.push({
+      id: Date.now(),
+      date: date,
+      start: start,
+      end: end,
+      title: title,
+      color: "purple",
+      icon: "✓"
+    });
+
+    selectedDate = date;
+    visibleMonth = dateFromISO(date);
+
+    saveState();
+    renderCalendar();
+    renderPlannerDate();
+    renderWeek();
+    renderEvents();
+    closeTaskModal();
+    showPage("planner");
+  }
+
+  function openModule(moduleName) {
+    showPage("organizer");
+
+    const content = document.getElementById("moduleContent");
+
+    const templates = {
+      birthdays: `
+        <h2 class="section-title">Ближайшие дни рождения</h2>
+        <div class="card list-card">
+          ${listRow("★", "Мама", "20 октября", "pink-bg")}
+          ${listRow("★", "Сара", "25 октября", "pink-bg")}
+          ${listRow("★", "Илья", "2 ноября", "pink-bg")}
+        </div>
+      `,
+
+      wishlist: `
+        <h2 class="section-title">Мой вишлист</h2>
+        <div class="card list-card">
+          ${listRow("♥", "Новые наушники", "Техника", "coral-bg")}
+          ${listRow("♥", "Аэрогриль", "Дом", "coral-bg")}
+          ${listRow("♥", "Книга", "Хобби", "coral-bg")}
+        </div>
+      `,
+
+      shopping: shoppingTemplate(),
+
+      budget: `
+        <h2 class="section-title">Бюджет за октябрь</h2>
+        <div class="card finance-card">
+          <h3>Общий баланс</h3>
+          <div class="finance-head">
+            <div class="income">
+              <small>Доходы</small>
+              <h2>120 000 ₽</h2>
+            </div>
+            <div class="expense">
+              <small>Расходы</small>
+              <h2>74 350 ₽</h2>
+            </div>
+          </div>
+          <div class="progress"><div style="width: 62%"></div></div>
+        </div>
+
+        <h2 class="section-title">Категории расходов</h2>
+        <div class="card list-card">
+          ${listRow("▥", "Жильё", "45 000 ₽", "blue-bg")}
+          ${listRow("▥", "Еда", "16 200 ₽", "orange-bg")}
+          ${listRow("▥", "Транспорт", "5 150 ₽", "mint-bg")}
+          ${listRow("▥", "Развлечения", "8 000 ₽", "purple-bg")}
+        </div>
+      `,
+
+      bills: `
+        <h2 class="section-title">Ежемесячные платежи</h2>
+        <div class="card list-card">
+          ${listRow("✓", "Аренда", "1 октября · 45 000 ₽ · Оплачено", "mint-bg")}
+          ${listRow("✓", "Интернет", "10 октября · 790 ₽ · Оплачено", "mint-bg")}
+          ${listRow("!", "Электричество", "18 октября · 1 800 ₽ · Осталось 3 дня", "coral-bg")}
+        </div>
+      `,
+
+      watchlist: `
+        <h2 class="section-title">Посмотреть позже</h2>
+        <div class="card list-card">
+          ${listRow("▶", "The Bear", "Сезон 3", "purple-bg")}
+          ${listRow("▶", "Дюна: Часть вторая", "Фильм", "purple-bg")}
+          ${listRow("▶", "Разделение", "Сезон 2", "purple-bg")}
+        </div>
+      `
+    };
+
+    content.innerHTML = templates[moduleName] || "";
+  }
+
+  function listRow(icon, title, subtitle, className) {
+    return `
+      <div class="list-row">
+        <div class="row-icon ${className}">${icon}</div>
+        <div class="row-content">
+          <strong>${title}</strong>
+          <small>${subtitle}</small>
+        </div>
+      </div>
+    `;
+  }
+
+  function shoppingTemplate() {
+    const items = state.shopping
+      .map((item) => {
+        const checkedClass = item.done ? "checked" : "";
+        const textClass = item.done ? "checked-text" : "";
+
+        return `
+          <div class="list-row">
+            <button
+              class="check-button ${checkedClass}"
+              onclick="toggleShopping(${item.id})"
+            >
+              ✓
+            </button>
+            <div class="row-content">
+              <strong class="${textClass}">${escapeHTML(item.title)}</strong>
+            </div>
+          </div>
+        `;
+      })
+      .join("");
+
+    return `
+      <h2 class="section-title">Список покупок</h2>
+      <div class="input-row">
+        <input id="shoppingInput" placeholder="Добавить товар">
+        <button class="primary-button" onclick="addShoppingItem()">Добавить</button>
+      </div>
+      <div class="card list-card">${items}</div>
+    `;
+  }
+
+  function toggleShopping(id) {
+    const item = state.shopping.find((product) => product.id === id);
+
+    if (!item) {
+      return;
+    }
+
+    item.done = !item.done;
+    saveState();
+    openModule("shopping");
+  }
+
+  function addShoppingItem() {
+    const input = document.getElementById("shoppingInput");
+    const title = input.value.trim();
+
+    if (!title) {
+      input.focus();
+      return;
+    }
+
+    state.shopping.push({
+      id: Date.now(),
+      title: title,
+      done: false
+    });
+
+    saveState();
+    openModule("shopping");
+  }
+
+  function toggleSwitch(id) {
+    document.getElementById(id).classList.toggle("on");
+  }
+
+  renderCalendar();
+  renderPlannerDate();
+  renderWeek();
+  renderEvents();
+  renderHabits();
+</script>
 </body>
 </html>
