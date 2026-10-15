@@ -28,7 +28,39 @@
       box-sizing: border-box;
       -webkit-tap-highlight-color: transparent;
     }
+.calendar-day {
+  border: 0;
+  cursor: pointer;
+}
 
+.calendar-day:hover {
+  background: var(--surface-light);
+}
+
+.calendar-day.today {
+  background: var(--coral);
+}
+
+.calendar-day.selected-date {
+  outline: 2px solid #ffffff;
+  outline-offset: 2px;
+}
+
+.calendar-nav-button {
+  width: 32px;
+  height: 32px;
+  color: var(--text);
+  background: var(--surface-light);
+  border-radius: 10px;
+  font-size: 22px;
+}
+
+.planner-date-label {
+  margin-top: 5px;
+  color: var(--muted);
+  font-size: 14px;
+}
+    
     body {
       margin: 0;
       min-height: 100vh;
